@@ -99,3 +99,7 @@ git push -u origin main
 ## License
 
 MIT — ver [LICENSE](./LICENSE).
+
+## Seguridad
+
+Ver [SECURITY.md](./SECURITY.md) para reportar vulnerabilidades y el baseline que los agentes exigen.
