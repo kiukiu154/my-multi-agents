@@ -1,38 +1,12 @@
 # my-multi-agents
 
-Multi-agent team (`coordinator` → `planner` → `cybersecurity` → `implementer` → `reviewer` → `start`) packaged for **OpenCode, Claude Code, Cursor, VS Code (Copilot) y Codex**.
+Multi-agent team (`coordinator` → `planner` → `cybersecurity` → `implementer` → `reviewer` → `start`) para **OpenCode, Claude Code, Cursor, VS Code (Copilot) y Codex**.
 
-Instala solo lo que necesites: una plataforma o todas.
-
-## Contenido por plataforma
-
-| Plataforma | Carpeta en este repo | Destino en tu proyecto | Global (usuario) |
-|---|---|---|---|
-| OpenCode | `.opencode/agents/*.md` | `<proj>/.opencode/agents/` + `AGENTS.md` | `~/.config/opencode/agents/` (Win: `%USERPROFILE%\.config\opencode\agents\`) |
-| Claude Code | `.claude/agents/*.md` | `<proj>/.claude/agents/` + `AGENTS.md` | `~/.claude/agents/` |
-| Cursor | `.cursor/agents/*.md` + `.cursor/rules/*.mdc` | `<proj>/.cursor/agents/` + `<proj>/.cursor/rules/` + `AGENTS.md` | `~/.cursor/agents/` (las rules van por proyecto) |
-| VS Code / Copilot | `.github/agents/*.agent.md` | `<proj>/.github/agents/` + `AGENTS.md` | `~/.copilot/agents/` |
-| Codex (OpenAI) | `codex/prompts/*.md` + `codex/workflow.md` | `<proj>/AGENTS.md` (+ `codex/` opcional) | `~/.codex/AGENTS.md` |
-
-Notas:
-- Cursor, Copilot y Codex leen `AGENTS.md` de la raiz automaticamente: copialo siempre al proyecto.
-- Codex no tiene subagentes nativos: se emula por fases pegando los prompts de `codex/prompts/` en orden (ver `codex/workflow.md`).
-- VS Code tambien detecta `.claude/agents/*.md`, asi que con instalar `claude` ya tienes cobertura parcial en VS Code.
-
-## Agentes (6, mismos en todas las plataformas)
-
-- **coordinator** — reparte trabajo, unico contacto del orquestador.
-- **planner** — planifica arquitectura, produce contexto (no edita).
-- **cybersecurity** — audita seguridad, devuelve informe + requisitos (no edita).
-- **implementer** — edita codigo segun contexto + requisitos.
-- **reviewer** — revisa sin editar. Veredicto `APROBADO` / `CAMBIOS NECESARIOS`.
-- **start** — arranca servidor (`npm start`) solo tras APROBADO, chequea `GET /api/health`.
-
-Reglas: [AGENTS.md](./AGENTS.md). Flujo: `orchestrator → coordinator → planner → cybersecurity → implementer → reviewer → start` (correccion: reviewer → coordinator → implementer).
+Reglas: [AGENTS.md](./AGENTS.md).
 
 ## Instalacion rapida (dentro del IDE, sin clonar)
 
-Abre la terminal de tu IDE **situado en la carpeta de tu proyecto** y pega una linea:
+En la terminal de tu proyecto pega una linea:
 
 **Windows (PowerShell):**
 
@@ -46,98 +20,71 @@ iex (irm https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/quick-
 curl -fsSL https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/quick-install.sh | bash
 ```
 
-Eso instala **todo** en el proyecto actual. Para solo una o varias plataformas:
+Solo una o varias plataformas:
 
 ```powershell
 $env:AGENTS_PLATFORM="claude"; iex (irm https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/quick-install.ps1)
-$env:AGENTS_PLATFORM="cursor,vscode"; iex (irm https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/quick-install.ps1)
 ```
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/quick-install.sh | AGENTS_PLATFORM="claude" bash
-curl -fsSL https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/quick-install.sh | AGENTS_PLATFORM="cursor vscode" bash
 ```
 
 Valores: `opencode`, `claude`, `cursor`, `vscode`, `codex`, `all`.
 
-Alternativa sin terminal: pega este prompt al **chat de tu IDE** (cambia `claude` por tu plataforma) y su propio agente lo instala:
+## Descarga suelta (sin instalar en IDE)
 
-```text
-Descarga https://github.com/kiukiu154/my-multi-agents/archive/refs/heads/main.zip,
-extrae la carpeta .claude/agents/ en la raiz de este proyecto y copia AGENTS.md
-solo si no existe. No modifiques nada mas e informame de lo instalado.
+Baja solo la carpeta que necesites a `downloads/<plataforma>/`:
+
+```powershell
+irm https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/download.ps1 -OutFile download.ps1
+.\download.ps1 -Platform claude
+.\download.ps1 -Platform cursor,vscode -OutDir "$env:USERPROFILE\Downloads\agents"
 ```
 
-## Instalacion selectiva
+```sh
+curl -fsSL https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/download.sh -o download.sh
+bash download.sh claude
+bash download.sh cursor vscode --out ~/Downloads/agents
+```
 
-Clona una vez:
+| Quiero | Contiene |
+|---|---|
+| `opencode` | `.opencode/agents/` + `AGENTS.md` |
+| `claude` | `.claude/agents/` + `AGENTS.md` |
+| `cursor` | `.cursor/agents/` + `.cursor/rules/` + `AGENTS.md` |
+| `vscode` | `.github/agents/` + `AGENTS.md` |
+| `codex` | `codex/prompts/` + `codex/workflow.md` + `AGENTS.md` |
+
+Sin terminal: abre la carpeta en GitHub y usa `Code → Download ZIP`, o descarga una subcarpeta con [download-directory](https://download-directory.github.io/?url=https://github.com/kiukiu154/my-multi-agents/tree/main/.claude/agents) cambiando la ruta (`opencode`, `claude`, `cursor`, `vscode`, `codex`).
+
+## Instalacion selectiva (clonando)
 
 ```sh
 git clone https://github.com/kiukiu154/my-multi-agents.git
 cd my-multi-agents
 ```
 
-### Linux / macOS (`install.sh`)
-
 ```sh
-./install.sh --list                          # ver que instala cada plataforma
-./install.sh claude --dir ~/mi-proyecto      # solo Claude, a un proyecto
-./install.sh cursor vscode --dir ~/mi-proyecto
-./install.sh codex --dir ~/mi-proyecto        # AGENTS.md + prompts manuales
-./install.sh all --dir ~/mi-proyecto          # todo
-./install.sh --global opencode claude         # nivel usuario (todas tus repos)
-./install.sh --global all
+./install.sh --list
+./install.sh claude --dir ~/mi-proyecto
+./install.sh all --dir ~/mi-proyecto
 ```
-
-### Windows (`install.ps1`)
 
 ```powershell
 .\install.ps1 -List
 .\install.ps1 -Platform claude -TargetDir C:\proj\miapp
-.\install.ps1 -Platform cursor,vscode -TargetDir C:\proj\miapp
-.\install.ps1 -Platform codex -TargetDir C:\proj\miapp
 .\install.ps1 -Platform all -TargetDir C:\proj\miapp
-.\install.ps1 -Platform opencode,claude -Global
-.\install.ps1 -Platform all -Global
 ```
 
-### Sin git
+## Uso
 
-GitHub → `Code → Download ZIP` → extrae → copia a mano la carpeta de la plataforma que quieras segun la tabla de arriba.
-
-## Uso por plataforma
-
-- **OpenCode**: `opencode` → `Use coordinator to implement <tarea>.`
-- **Claude Code**: `/agents` verifica los 6 → `Use the coordinator agent for <tarea>.`
-- **Cursor**: `@coordinator <tarea>` (las rules de `.cursor/rules/` aplican el flujo solas).
-- **VS Code**: selector de agente → `coordinator` → pide la tarea; usa los botones de `handoffs` para pasar de fase.
-- **Codex**: pega `codex/prompts/coordinator.md` + tu tarea, o sigue `codex/workflow.md` fase por fase.
-
-## Verificar
-
-```sh
-ls .opencode/agents/  # opencode
-ls .claude/agents/    # claude
-ls .cursor/agents/ .cursor/rules/  # cursor
-ls .github/agents/    # vscode
-ls codex/prompts/     # codex
-```
-
-## Subir a GitHub
-
-```sh
-cd my-multi-agents
-git add .
-git commit -m "feat: multi-platform agents (opencode, claude, cursor, vscode, codex) with selective install"
-git branch -M main
-git remote add origin https://github.com/kiukiu154/my-multi-agents.git
-git push -u origin main
-```
-
-## License
-
-MIT — ver [LICENSE](./LICENSE).
+- **OpenCode**: `Use coordinator to implement <tarea>.`
+- **Claude Code**: `Use the coordinator agent for <tarea>.`
+- **Cursor**: `@coordinator <tarea>`
+- **VS Code**: selector de agente → `coordinator`
+- **Codex**: pega `codex/prompts/coordinator.md` + tu tarea.
 
 ## Seguridad
 
-Ver [SECURITY.md](./SECURITY.md) para reportar vulnerabilidades y el baseline que los agentes exigen.
+Ver [SECURITY.md](./SECURITY.md). Licencia MIT — ver [LICENSE](./LICENSE).
