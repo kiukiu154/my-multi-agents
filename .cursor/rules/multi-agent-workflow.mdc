@@ -1,0 +1,22 @@
+---
+description: Multi-agent workflow coordinator-planner-cybersecurity-implementer-reviewer-start
+globs:
+  - "**/*"
+alwaysApply: true
+---
+
+# Multi-agent workflow (Cursor)
+
+Cursor lee `AGENTS.md` automaticamente como instrucciones de proyecto. Usa los subagentes de `.cursor/agents/` con @mention:
+
+- `@coordinator` — reparte trabajo, unico punto de contacto del orquestador.
+- `@planner` — planifica arquitectura, produce contexto para implementer.
+- `@cybersecurity` — audita seguridad, devuelve informe con requisitos.
+- `@implementer` — edita codigo segun contexto + requisitos.
+- `@reviewer` — revisa sin editar. Veredicto: APROBADO / CAMBIOS NECESARIOS.
+- `@start` — arranca servidor (`npm start`) solo tras APROBADO.
+
+Flujo: orchestrator -> @coordinator -> @planner -> @cybersecurity -> @implementer -> @reviewer -> @start.
+Correccion: reviewer -> coordinator -> implementer -> coordinator -> reviewer.
+
+Reglas: ver AGENTS.md en la raiz.
