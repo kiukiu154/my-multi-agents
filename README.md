@@ -30,6 +30,44 @@ Notas:
 
 Reglas: [AGENTS.md](./AGENTS.md). Flujo: `orchestrator → coordinator → planner → cybersecurity → implementer → reviewer → start` (correccion: reviewer → coordinator → implementer).
 
+## Instalacion rapida (dentro del IDE, sin clonar)
+
+Abre la terminal de tu IDE **situado en la carpeta de tu proyecto** y pega una linea:
+
+**Windows (PowerShell):**
+
+```powershell
+iex (irm https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/quick-install.ps1)
+```
+
+**Linux / macOS:**
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/quick-install.sh | bash
+```
+
+Eso instala **todo** en el proyecto actual. Para solo una o varias plataformas:
+
+```powershell
+$env:AGENTS_PLATFORM="claude"; iex (irm https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/quick-install.ps1)
+$env:AGENTS_PLATFORM="cursor,vscode"; iex (irm https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/quick-install.ps1)
+```
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/quick-install.sh | AGENTS_PLATFORM="claude" bash
+curl -fsSL https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/quick-install.sh | AGENTS_PLATFORM="cursor vscode" bash
+```
+
+Valores: `opencode`, `claude`, `cursor`, `vscode`, `codex`, `all`.
+
+Alternativa sin terminal: pega este prompt al **chat de tu IDE** (cambia `claude` por tu plataforma) y su propio agente lo instala:
+
+```text
+Descarga https://github.com/kiukiu154/my-multi-agents/archive/refs/heads/main.zip,
+extrae la carpeta .claude/agents/ en la raiz de este proyecto y copia AGENTS.md
+solo si no existe. No modifiques nada mas e informame de lo instalado.
+```
+
 ## Instalacion selectiva
 
 Clona una vez:
