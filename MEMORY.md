@@ -19,3 +19,10 @@
   - Creado: docs/mcp-filesystem.md
   - Creado: examples/mcp/opencode-filesystem.fragment.json
   - Verificación: Get-Content OK ambos, Select-String ctx7sk SIN HALLAZGOS, Select-String latest SIN HALLAZGOS, npm view 2026.8.31 + shasum 7f88dfab06d4521a4bf937dccbaeb79d46a3e717 idénticos, Test-Path True x2, opencode mcp list ambos connected, read fuera DENEGADO, verify-agents verify OK exit 0
+
+## 2026-10-10 - Publicar blindaje + sync agentes + README bilingüe
+- Fecha: 2026-10-10
+- Agente que lo ejecutó: implementer (vía coordinator, con autorización explícita del orquestador)
+- Motivo: petición "no me aparece que se actualizo"; causa commit/push pendiente (HEAD 1a9d40c == origin/main). Alcance Completo 33M+5U.
+- Archivos: 33 modificados + 5 creados (.env.example, MEMORY.md, README.en.md, docs/mcp-filesystem.md, examples/mcp/opencode-filesystem.fragment.json); 38 files, +819/-167.
+- Commit: 8ad45245642b1833ac58d502ba5d60e59735ec8d "chore(security): blindaje + sync agentes + README bilingüe"; push origin main 1a9d40c..8ad4524 OK, ls-remote HEAD == 8ad4524, status limpio, verify OK exit 0, sin force, sin secretos.
