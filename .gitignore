@@ -3,3 +3,9 @@ node_modules/
 Thumbs.db
 *.log
 .opencode/auth.json
+.env*
+!.env.example
+*.key
+*.pem
+*.db
+auth.json

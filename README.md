@@ -4,6 +4,8 @@ Multi-agent team (`coordinator` → `planner` → `cybersecurity` → `implement
 
 Reglas: [AGENTS.md](./AGENTS.md).
 
+English version: [README.en.md](./README.en.md).
+
 ## Instalacion rapida (dentro del IDE, sin clonar)
 
 En la terminal de tu proyecto pega una linea:

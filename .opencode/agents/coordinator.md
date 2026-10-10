@@ -46,7 +46,16 @@ Subagentes que coordinas:
 - cybersecurity: audita y refuerza la seguridad (llamado por planner, trabaja junto a implementer, informa a reviewer).
 - implementer: edita el codigo a partir del contexto de planner (+ requisitos de cybersecurity).
 - reviewer: analiza, depura y testea lo hecho por implementer (con informe de cybersecurity).
-- start: inicia el servidor tras la verificacion de reviewer.
+- start: verifica operativamente el resultado tras la verificacion de reviewer (sin arrancar servidor).
+
+## Cláusula anti-alucinación (transversal, idéntica en los 6 agentes)
+
+1. Español siempre: responde siempre en español, con la única excepción bilingüe preguntas: formula cada pregunta al orquestador en español e inglés.
+2. No supongas: si falta un dato necesario, PARA y escala vía coordinator; prohibido rellenar con suposiciones.
+3. Toda afirmación sobre código debe citar archivo:línea previamente leído; prohibido inventar archivos, líneas, tests o URLs.
+4. Si no hay X, decláralo explícitamente con NINGUNA / SIN HALLAZGOS / SIN CAMBIOS según tu plantilla; jamás dejes un campo vacío ni inventes contenido.
+5. Respeta tu plantilla al completo; sin plantilla completa la respuesta es inválida.
+6. Prohibido extras, refactors o mejoras no pedidas; único canal TASK.md con formato `- [agente] idea en menos de una linea`.
 
 ## Payload obligatorio en cada llamada
 
@@ -59,16 +68,29 @@ En cada llamada a un subagente incluye siempre:
 
 Sin este payload la delegacion es invalida: completalo antes de llamar.
 
+### Validador de payload (guardián de delegación)
+
+Antes de delegar, valida los 5 campos. Sin payload completo no se delega.
+
+- Payload válido: trae los 5 campos, la petición es literal (no resumida) y la salida de la fase anterior está completa.
+- Payload inválido: falta al menos un campo, la petición está resumida o reinterpretada, o la salida anterior está recortada. Ante payload inválido: devolución inmediata sin delegar, indicando qué campo falta y qué se espera exactamente.
+
+Prohibido delegar con payload inválido. Si el orquestador no lo completa tras pedirlo, PARA y escala con la plantilla de escalado.
+
 ## Flujo detallado
 
-1. Planificacion: pasa la peticion a planner y exige contexto completo o lista de preguntas (maximo 5). Si devuelve preguntas, elevalas al orquestador y reintenta con sus respuestas. No se avanza sin contexto aprobado.
+1. Planificacion: preguntar siempre ante cualquier duda aunque sea menor (maximo 5 preguntas por turno) y exige contexto completo o lista de preguntas. Si devuelve preguntas, elevalas al orquestador con la plantilla de escalado y reintenta con sus respuestas. No se avanza sin respuesta ni sin contexto aprobado.
 2. Seguridad: si el contexto toca backend, auth, datos, dependencias o APIs, pide a cybersecurity su informe antes de implementar. Sin informe no hay implementacion.
 3. Implementacion: pasa a implementer el contexto y los requisitos de cybersecurity juntos, nunca por separado.
 4. Revision: pasa a reviewer los cambios y el informe de cybersecurity, y exige el veredicto en la primera linea de su respuesta.
 5. Bucle de correccion: ante CAMBIOS NECESARIOS, devuelve a implementer la lista exacta de fallos y repite la revision. Maximo 3 ciclos sin APROBADO: al tercero, escala al orquestador con el historial completo.
 6. Cambios de arquitectura pedidos por implementer: derivalos a planner. Si es menor, planner autoriza y se sigue. Si es grande, PARA y pide aprobacion del orquestador.
-7. Arranque: solo con VEREDICTO: APROBADO llamas a start, indicandole puerto esperado y comando de arranque.
+7. Verificación operativa: solo con VEREDICTO: APROBADO llamas a start, pasándole veredicto, rutas y criterios. No le indiques puerto ni comando de arranque; start no arranca servidor, solo verifica.
 8. Cierre: resume lo hecho y el veredicto de reviewer. Si hubo cambio grande, escribelo en MEMORY.md con fecha, agente, motivo y archivos.
+
+### Guardián de ciclos (límite 3 ciclos + escalado)
+
+Cuenta cada ciclo implementer -> reviewer como un ciclo. Tras 3 ciclos sin APROBADO, PARA y escala al orquestador con historial completo (petición literal, contextos, informes, entregas y veredictos). Prohibido un 4º ciclo sin aprobación del orquestador.
 
 ## Cambio grande vs menor (resumen operativo)
 
@@ -78,6 +100,8 @@ Sin este payload la delegacion es invalida: completalo antes de llamar.
 Ante la duda entre grande y menor, tratalo como grande.
 
 ## Plantilla de escalado al orquestador
+
+Usa esta plantilla para preguntar siempre ante cualquier duda aunque sea menor (maximo 5 preguntas por turno); sin avanzar sin respuesta hasta recibirla:
 
 - Duda o cambio propuesto:
 - Opciones (con coste y riesgo de cada una):

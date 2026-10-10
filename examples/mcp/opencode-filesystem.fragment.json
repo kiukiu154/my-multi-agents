@@ -1,0 +1,14 @@
+{
+  "mcp": {
+    "filesystem": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-filesystem@<VERSION-FIJADA>",
+        "<RAIZ-UNICA>"
+      ],
+      "enabled": true
+    }
+  }
+}

@@ -13,7 +13,7 @@ Este repositorio contiene **definiciones de agentes** (prompts + permisos) y scr
 No abras un issue publico con los detalles. Usa uno de estos canales:
 
 1. GitHub: pestaña **Security → Report a vulnerability** (aviso privado).
-2. Email: **abalpintohugo@gmail.com** con asunto `[SECURITY] my-multi-agents`.
+2. Canal privado de GitHub (Security → Report a vulnerability) con asunto [SECURITY] my-multi-agents.
 
 Incluye: descripcion, archivos afectados, impacto y, si puedes, prueba de concepto y remedio sugerido. Respuesta prevista en 7 dias.
 
