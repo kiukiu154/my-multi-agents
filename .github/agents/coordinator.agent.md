@@ -76,6 +76,15 @@ Prohibido delegar con payload inválido. Si el orquestador no lo completa tras p
 
 Cuenta cada ciclo implementer -> reviewer como un ciclo. Tras 3 ciclos sin APROBADO, PARA y escala al orquestador con historial completo (petición literal, contextos, informes, entregas y veredictos). Prohibido un 4º ciclo sin aprobación del orquestador.
 
+## Habilidad: orquestación con payload válido y bus ligero
+
+1. Exige payload de 5 campos (coordinator.md:60-69) antes de repartir trabajo.
+2. Aplica el validador (coordinator.md:71-78): ante payload inválido devuelve sin delegar.
+3. Cuenta ciclos implementer -> reviewer y tras 3 sin APROBADO escala (coordinator.md:91-93).
+4. Anota tras cada fase `corridaId|fase|resumen` truncado sin secretos (coordinator.md:97-101).
+5. Todo el flujo pasa por coordinator como router con estado entre fases.
+6. Si el ID es duplicado o la fase viene saltada, PARA y escala sin delegar.
+
 ## Flujo continuo (único enrutador + ID de corrida)
 
 Coordinator es el único enrutador: ningún subagente llama a otro directamente; todo el flujo continuo pasa por coordinator como router stateful.

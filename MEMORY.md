@@ -37,3 +37,24 @@
   - Verificación: sync 24 + done, verify OK 6x5 exit 0 sin DIVERGE, diff 34 files +159/-0, grep Flujo continuo 12 / ID de corrida 7 / RUN 6 canónicos
   - Corrida: RUN-20261016-001|plan+security+build+review+operate+cierre
 
+## 2026-10-16 - Añadir MCP memory + sequential-thinking locales
+- Fecha: 2026-10-16
+- Agente que lo detectó: planner (vía coordinator RUN-20261016-002, con requisitos cybersecurity SIN HALLAZGOS)
+- Motivo: petición literal "busca mcp de terceros para funcionamiento de sub agentes con mejor rendimiento e instalalos"; decisiones (tokens, Solo locales gratis, Permitir con env, añadir al sistema manteniendo filesystem+context7, Multiplataforma). Cambio GRANDE (2 nuevos MCP + docs/examples, ante duda se trata como grande). Aprobado por reviewer VEREDICTO: APROBADO, start OK.
+- Archivos:
+  - Modificado: C:\Users\abalp\.config\opencode\opencode.json (añadidos memory@1.0.0 + sequential-thinking@1.0.0 locales, mantenidos context7+filesystem)
+  - Creado: docs/mcp-performance.md
+  - Creado: examples/mcp/opencode-performance.fragment.json
+  - Verificación: npm view versiones+shasum OK, Test-Path True x2, Select-String ctx7sk/latest SIN HALLAZGOS, opencode mcp list 4 connected, verify-agents OK 6x5 exit 0
+  - Corrida: RUN-20261016-002|plan+security+build+review+operate+cierre
+
+## 2026-10-16 - Añadir 1 skill por agente (sección en cuerpo)
+- Fecha: 2026-10-16
+- Agente que lo detectó: planner (vía coordinator RUN-20261016-003, con requisitos cybersecurity SIN HALLAZGOS)
+- Motivo: petición literal "para cada agente anadele una skill que mejore su funcion, para que mejore contexto y sea mas eficiente"; decisiones Q1 sección markdown en cuerpo, Q2 5 plataformas vía sync, Q3 frontmatter intacto/BLOQUEANTE si se amplía, Q4 1 skill por agente propuesta por planner, Q5 verify verde+cadena+diff acotado+registro. Cambio GRANDE (6 contratos + propagación). Aprobado por reviewer VEREDICTO: APROBADO, start OK exit 0.
+- Archivos:
+  - Modificados directos (6): .opencode/agents/coordinator.md, .opencode/agents/planner.md, .opencode/agents/cybersecurity.md, .opencode/agents/implementer.md, .opencode/agents/reviewer.md, .opencode/agents/start.md (solo sección ## Habilidad aditiva +9 líneas antes de ## Flujo continuo, sin frontmatter/permissions)
+  - Propagados vía tools/sync-agents.ps1 (24): .claude/agents/*.md (6), .cursor/agents/*.md (6), .github/agents/*.agent.md (6), codex/prompts/*.md (6)
+  - Verificación: tools/verify-agents.ps1 exit 0 verify OK 6x5 sin DIVERGE, Select-String ## Habilidad 6/6 + Flujo continuo 6/6 + ID de corrida 6/6, diff 30 agentes +9 c/u frontmatter cero
+  - Corrida: RUN-20261016-003|plan+security+build+review+operate+cierre
+
