@@ -13,23 +13,25 @@ In your project terminal paste one line:
 **Windows (PowerShell):**
 
 ```powershell
-iex (irm https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/quick-install.ps1)
+iex (irm https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/tools/install/quick-install.ps1)
 ```
 
 **Linux / macOS:**
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/quick-install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/tools/install/quick-install.sh | bash
 ```
+
+> Canonical: `tools/install/` (6 installers). Compat: the 6 root shims (`install.*`, `quick-install.*`, `download.*`) delegate to the canonical path and keep working on clone.
 
 Only one or several platforms:
 
 ```powershell
-$env:AGENTS_PLATFORM="claude"; iex (irm https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/quick-install.ps1)
+$env:AGENTS_PLATFORM="claude"; iex (irm https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/tools/install/quick-install.ps1)
 ```
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/quick-install.sh | AGENTS_PLATFORM="claude" bash
+curl -fsSL https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/tools/install/quick-install.sh | AGENTS_PLATFORM="claude" bash
 ```
 
 Values: `opencode`, `claude`, `cursor`, `vscode`, `codex`, `all`.
@@ -39,13 +41,13 @@ Values: `opencode`, `claude`, `cursor`, `vscode`, `codex`, `all`.
 Download only the folder you need into `downloads/<platform>/`:
 
 ```powershell
-irm https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/download.ps1 -OutFile download.ps1
+irm https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/tools/install/download.ps1 -OutFile download.ps1
 .\download.ps1 -Platform claude
 .\download.ps1 -Platform cursor,vscode -OutDir "$env:USERPROFILE\Downloads\agents"
 ```
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/download.sh -o download.sh
+curl -fsSL https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/tools/install/download.sh -o download.sh
 bash download.sh claude
 bash download.sh cursor vscode --out ~/Downloads/agents
 ```
@@ -68,16 +70,20 @@ cd my-multi-agents
 ```
 
 ```sh
-./install.sh --list
-./install.sh claude --dir ~/mi-proyecto
-./install.sh all --dir ~/mi-proyecto
+./tools/install/install.sh --list
+./tools/install/install.sh claude --dir ~/mi-proyecto
+./tools/install/install.sh all --dir ~/mi-proyecto
 ```
 
+Compat (root shim): `./install.sh` delegates to `tools/install/install.sh`.
+
 ```powershell
-.\install.ps1 -List
-.\install.ps1 -Platform claude -TargetDir C:\proj\miapp
-.\install.ps1 -Platform all -TargetDir C:\proj\miapp
+./tools/install/install.ps1 -List
+./tools/install/install.ps1 -Platform claude -TargetDir C:\proj\miapp
+./tools/install/install.ps1 -Platform all -TargetDir C:\proj\miapp
 ```
+
+Compat (root shim): `.\install.ps1` delegates to `tools/install/install.ps1`.
 
 ## Usage
 
