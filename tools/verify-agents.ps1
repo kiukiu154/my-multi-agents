@@ -21,5 +21,17 @@ foreach ($n in $Agents) {
     if (-not $body.Contains($canon)) { Write-Host "DIVERGE: $f"; $ok = $false }
   }
 }
+function Assert-FlujoContinuo {
+  $pairs = @(
+    @{ Name = "ID de corrida"; Pattern = "ID de corrida" },
+    @{ Name = "Flujo continuo"; Pattern = "Flujo continuo" },
+    @{ Name = "unico enrutador"; Pattern = "nico enrutador" }
+  )
+  foreach ($p in $pairs) {
+    $hits = Select-String -Path (Join-Path $Root ".opencode/agents/*.md") -Pattern $p.Pattern -SimpleMatch -Encoding utf8
+    if (-not $hits) { Write-Host ("FALTA cadena: " + $p.Name); $script:ok = $false }
+  }
+}
+Assert-FlujoContinuo
 if ($ok) { Write-Host "verify OK: 6 agentes x 5 plataformas contienen el cuerpo canonico" }
 else { exit 1 }

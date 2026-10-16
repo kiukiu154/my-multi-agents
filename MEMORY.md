@@ -26,3 +26,14 @@
 - Motivo: petición "no me aparece que se actualizo"; causa commit/push pendiente (HEAD 1a9d40c == origin/main). Alcance Completo 33M+5U.
 - Archivos: 33 modificados + 5 creados (.env.example, MEMORY.md, README.en.md, docs/mcp-filesystem.md, examples/mcp/opencode-filesystem.fragment.json); 38 files, +819/-167.
 - Commit: 8ad45245642b1833ac58d502ba5d60e59735ec8d "chore(security): blindaje + sync agentes + README bilingüe"; push origin main 1a9d40c..8ad4524 OK, ls-remote HEAD == 8ad4524, status limpio, verify OK exit 0, sin force, sin secretos.
+
+## 2026-10-16 - Flujo continuo router + ID corrida
+- Fecha: 2026-10-16
+- Agente que lo detectó: planner (vía coordinator RUN-20261016-001, con requisitos cybersecurity SIN HALLAZGOS)
+- Motivo: petición literal "todos los agentes (coordinator.md, planner.md y demas)deneran estar interconectados, ya no solo como llamamiento si no como un flujo continuo"; decisiones Q1 router+ID único enrutador, Q2 alcance ampliado, Q3 payload+bus ligero, Q4 mantener guardián 3 ciclos y validador, Q5 verify verde+cadena+diff. Cambio GRANDE (payload encadenado + ID RUN-YYYYMMDD-NNN + fase + historial, bus ligero MEMORY/TASK, verificación cadena). Aprobado por reviewer VEREDICTO: APROBADO, start OK exit 0.
+- Archivos:
+  - Modificados directos (10): .opencode/agents/coordinator.md, .opencode/agents/planner.md, .opencode/agents/cybersecurity.md, .opencode/agents/implementer.md, .opencode/agents/reviewer.md, .opencode/agents/start.md, AGENTS.md (línea 8 flujo continuo), codex/workflow.md, .cursor/rules/multi-agent-workflow.mdc, tools/verify-agents.ps1 (Assert-FlujoContinuo solo lectura)
+  - Propagados vía tools/sync-agents.ps1 (24, SIN CAMBIOS en sync): .claude/agents/*.md (6), .cursor/agents/*.md (6), .github/agents/*.agent.md (6), codex/prompts/*.md (6)
+  - Verificación: sync 24 + done, verify OK 6x5 exit 0 sin DIVERGE, diff 34 files +159/-0, grep Flujo continuo 12 / ID de corrida 7 / RUN 6 canónicos
+  - Corrida: RUN-20261016-001|plan+security+build+review+operate+cierre
+

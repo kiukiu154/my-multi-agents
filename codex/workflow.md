@@ -12,3 +12,7 @@ Codex es un unico agente que lee `AGENTS.md` automaticamente. Emula al equipo mu
    - `codex/prompts/start.md` solo tras APROBADO.
 
 Instalacion: copia `AGENTS.md` a la raiz de tu proyecto. Codex lo carga solo. Los prompts de `codex/prompts/` no se instalan: se pegan a mano cuando los necesites.
+
+## Flujo continuo (único enrutador + ID de corrida)
+
+Codex emula el flujo continuo con coordinator como único enrutador: cada corrida usa un ID de corrida `RUN-YYYYMMDD-NNN` y propaga fase (`plan|security|build|review|operate|cierre`) e historial como datos entre fases.

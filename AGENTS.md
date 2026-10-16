@@ -11,6 +11,7 @@ Aplica a coordinator, planner, cybersecurity, implementer, reviewer y start.
 5. @reviewer llama a @start (via @coordinator) cuando su veredicto es APROBADO.
 6. Ningun subagente llama a otro directamente fuera de lo anterior. Toda duda o peticion va a @coordinator y el la eleva al orquestador.
 7. Flujo de correccion: reviewer -> coordinator -> implementer -> coordinator -> reviewer.
+8. Flujo continuo: coordinator es el único enrutador con ID de corrida; ningún subagente llama a otro directamente.
 
 ## Limitaciones (prohibido)
 - Prohibido salirse del contexto: cada agente solo hace lo que le pide @coordinator en esa llamada. No anades extras, refactors ni mejoras no pedidas.

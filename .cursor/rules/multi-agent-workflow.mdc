@@ -20,3 +20,5 @@ Flujo: orchestrator -> @coordinator -> @planner -> @cybersecurity -> @implemente
 Correccion: reviewer -> coordinator -> implementer -> coordinator -> reviewer.
 
 Reglas: ver AGENTS.md en la raiz.
+
+Nota de flujo continuo: coordinator es el único enrutador; cada corrida usa un ID de corrida `RUN-YYYYMMDD-NNN` con fase (`plan|security|build|review|operate|cierre`) e historial de pasos previos como datos.
