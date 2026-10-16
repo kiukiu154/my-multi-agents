@@ -16,11 +16,13 @@ En la terminal de tu proyecto pega una linea:
 iex (irm https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/quick-install.ps1)
 ```
 
-**Linux / macOS:**
+**Linux/macOS:**
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/quick-install.sh | bash
 ```
+
+> Se conservan los 6 instaladores porque cubren Windows, Linux y macOS con funciones distintas (instalación rápida, selectiva y descarga por OS).
 
 Solo una o varias plataformas:
 
@@ -38,11 +40,15 @@ Valores: `opencode`, `claude`, `cursor`, `vscode`, `codex`, `all`.
 
 Baja solo la carpeta que necesites a `downloads/<plataforma>/`:
 
+**Windows:**
+
 ```powershell
 irm https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/download.ps1 -OutFile download.ps1
 .\download.ps1 -Platform claude
 .\download.ps1 -Platform cursor,vscode -OutDir "$env:USERPROFILE\Downloads\agents"
 ```
+
+**Linux/macOS:**
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/kiukiu154/my-multi-agents/main/download.sh -o download.sh
@@ -67,11 +73,15 @@ git clone https://github.com/kiukiu154/my-multi-agents.git
 cd my-multi-agents
 ```
 
+**Linux/macOS:**
+
 ```sh
 ./install.sh --list
 ./install.sh claude --dir ~/mi-proyecto
 ./install.sh all --dir ~/mi-proyecto
 ```
+
+**Windows:**
 
 ```powershell
 .\install.ps1 -List
